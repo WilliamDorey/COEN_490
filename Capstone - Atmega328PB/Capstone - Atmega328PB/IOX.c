@@ -55,6 +55,7 @@ const struct {
 	uint8_t cs_value;
 	uint8_t hex_value;
 }
+
 cs_hex_lookup[] = {
 	{0, 0xBF},		{1, 0x7F},		{2, 0xFE},		{3, 0xFD},		{4, 0xFB},
 	{5, 0xF7},		{6, 0xEF},		{7, 0xFB},		{8, 0xFD},		{9, 0xFE},
