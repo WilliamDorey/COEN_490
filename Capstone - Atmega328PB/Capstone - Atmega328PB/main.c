@@ -111,7 +111,6 @@ int main(){
 		UART_TxChar(opcode);
 
 		switch(opcode){
-			//Toggle LED
 			case 'L':
 			//UART_SendString("\n\rSELECT LED>");
 			id[0] = UART_RxChar();
@@ -125,7 +124,7 @@ int main(){
 
 			ToggleLED(LED, ledID, colour);
 			break;
-			
+
 			//Change DAC value
 			case 'D':
 			DAC_value = 0;
@@ -144,9 +143,9 @@ int main(){
 			DAC_lo = (DAC_value & 0x3F) << 2;
 			DAC_Program(DAC_hi, DAC_lo);
 			break;
-			
-			//Change intensity of LEDs
-			case 'R':
+
+		//Change intensity of LEDs
+		case 'R':
 			//UART_SendString("\n\rSELECT LED>");
 			id[0] = UART_RxChar();
 			//UART_TxChar(id[0]);
@@ -186,7 +185,7 @@ int main(){
 			LED_all_on(LED, colour);
 			break;
 			
-			//Show Temperature of potentiostat
+      //Show Temperature of potentiostat
 			case 'T':
 			data_temp = 0;
 			temp = 0;
@@ -223,7 +222,7 @@ int main(){
 			UART_SendString("\n\rTEMP READ!\r\n");
 			break;
 			
-			case 'V':
+		case 'V':
 			resultIdx = 0;
 			pot = 0;
 			Prog_LMP(0, 0x12, 0x02); // FET = Disabled, MODE = Standby
@@ -234,7 +233,7 @@ int main(){
 			_delay_ms(50);
 			Prog_LMP(0, 0x12, 0x03); // FET = Disabled, MODE = 3-Lead amperometric
 			_delay_ms(50);
-			
+
 			for(uint8_t i = 0; i <= 11; i ++)
 			{
 				Prog_LMP(0, 0x11, 0x20 + i); // REF = External, INT_Z = 50%, BIAS_SIGN = Negative, BIAS = i
@@ -242,7 +241,6 @@ int main(){
 				results[resultIdx] = Read_ADC(0,pot);
 				resultIdx ++;
 			}
-			
 			for(uint8_t i = 11; i > 0; i --)
 			{
 				Prog_LMP(0, 0x11, 0x20 + i); // REF = External, INT_Z = 50%, BIAS_SIGN = Negative, BIAS = i
@@ -252,7 +250,6 @@ int main(){
 			}
 			for(uint8_t i = 0; i <= 11; i ++)
 			{
-				
 				Prog_LMP(0, 0x11, 0x30 + i); // REF = External, INT_Z = 50%, BIAS_SIGN = Positive, BIAS = i
 				_delay_ms(100);
 				results[resultIdx] = Read_ADC(0,pot);
@@ -281,7 +278,7 @@ int main(){
 			
 			break;
 			
-			default:
+		default:
 			UART_SendString("\r\nERR: NOT A VALID OPCODE!");
 			break;
 		}

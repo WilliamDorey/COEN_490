@@ -46,6 +46,7 @@ void LED_all_on(uint8_t LED[], char colour)
 	
 	for (int i = 0; i < LED_COUNT; i++)
 	LED[i] |= mask;
+
 	
 	switch(colour)
 	{
