@@ -27,7 +27,7 @@ const uint8_t cs_ranges[RANGE][2] = {
 	{58, 62},		//IO2 of U5 for green LEDs
 	{2, 6},			//IO3 of U4 for red LEDs
 	{10, 12},		//IO3 of U4 for red LEDs
-	{38, 44},		//IO3 of U5 for blue LEDs 
+	{38, 44},		//IO3 of U5 for blue LEDs
 	{57, 57},		//IO3 of U5 for green LEDs
 	{7, 9},			//IO4 of U4 for red LEDs
 	{25, 27},		//IO4 of U5 for blue LEDs
@@ -49,12 +49,13 @@ uint8_t lookup_cs_values (uint8_t CS){
 		}
 	}
 	return 0;
-} 	
+}
 
 const struct {
 	uint8_t cs_value;
 	uint8_t hex_value;
 }
+
 cs_hex_lookup[] = {
 	{0, 0xBF},		{1, 0x7F},		{2, 0xFE},		{3, 0xFD},		{4, 0xFB},
 	{5, 0xF7},		{6, 0xEF},		{7, 0xFB},		{8, 0xFD},		{9, 0xFE},

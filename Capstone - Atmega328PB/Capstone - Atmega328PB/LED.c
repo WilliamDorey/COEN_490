@@ -24,6 +24,56 @@ void LED_all_off(uint8_t LED[])
 	}
 }
 
+void LED_all_on(uint8_t LED[], char colour)
+{
+	uint8_t offset = 0;
+	uint8_t mask = 0;
+	switch(colour)
+	{
+		case 'R':
+		offset = 0;
+		mask = 0b100;
+		break;
+		case 'G':
+		offset = 25;
+		mask = 0b010;
+		break;
+		case 'B':
+		offset = 50;
+		mask = 0b001;
+		break;
+	}
+	
+	for (int i = 0; i < LED_COUNT; i++)
+	LED[i] |= mask;
+	
+	switch(colour)
+	{
+	case 'R':
+		offset = 0;
+		break;
+	case 'G':
+		offset = 25;
+		break;
+	case 'B':
+		offset = 50;
+		break;
+	default:
+		return;
+	}
+	
+	for (uint8_t CS = offset; CS < 25 + offset; CS++)
+	{
+		CS_low(CS);
+		
+		SPI_Write(0x40);
+		SPI_Write(0xFF);
+
+		CS_high(CS);
+		_delay_ms(1);
+	}
+}
+
 void ToggleLED(uint8_t LED[], uint8_t ID, char colour)
 {
 	uint8_t SPI_command = 0;
@@ -31,18 +81,18 @@ void ToggleLED(uint8_t LED[], uint8_t ID, char colour)
 	
 	if(ID > 49)
 	{
-		UART_SendString("\n\rERR: NOT A VALID LED ID!");
+		//UART_SendString("\n\rERR: NOT A VALID LED ID!");
 		return;
 	}
 	
 	switch (colour)
 	{
 		default:
-		UART_SendString("\n\rERR: NOT A VALID LED COLOUR!");
+		//UART_SendString("\n\rERR: NOT A VALID LED COLOUR!");
 		return;
 		
 		case 'R':
-		UART_SendString("\n\rRED");
+		//UART_SendString("\n\rRED");
 		CS = CS;
 		LED[ID] = (LED[ID] & 0b011) | (~LED[ID] & 0b100);
 
@@ -58,7 +108,7 @@ void ToggleLED(uint8_t LED[], uint8_t ID, char colour)
 		break;
 		
 		case 'G':
-		UART_SendString("\n\rGREEN");
+		//UART_SendString("\n\rGREEN");
 		CS = CS + 25;
 		LED[ID] = (LED[ID] & 0b101) | (~LED[ID] & 0b010);
 		
@@ -74,7 +124,7 @@ void ToggleLED(uint8_t LED[], uint8_t ID, char colour)
 		break;
 		
 		case 'B':
-		UART_SendString("\n\rBLUE");
+		//UART_SendString("\n\rBLUE");
 		CS = CS + 50;
 		LED[ID] = (LED[ID] & 0b110) | (~LED[ID] & 0b001);
 		
@@ -99,7 +149,7 @@ void ToggleLED(uint8_t LED[], uint8_t ID, char colour)
 
 	//SET CS HIGH
 	CS_high(CS);
-	UART_SendString("\n\rLED updated!\r\n");
+	//UART_SendString("\n\rLED updated!\r\n");
 }
 
 void SetLEDBrightness(uint8_t ID, char colour, uint8_t level)
@@ -109,21 +159,21 @@ void SetLEDBrightness(uint8_t ID, char colour, uint8_t level)
 	switch (colour)
 	{
 		default:
-		UART_SendString("\n\rERR: NOT A VALID LED COLOUR!");
+		//UART_SendString("\n\rERR: NOT A VALID LED COLOUR!");
 		return;
 		
 		case 'R':
-		UART_SendString("\n\rRED");
+		//UART_SendString("\n\rRED");
 		CS = CS;
 		break;
 		
 		case 'G':
-		UART_SendString("\n\rGREEN");
+		//UART_SendString("\n\rGREEN");
 		CS = CS + 25;
 		break;
 		
 		case 'B':
-		UART_SendString("\n\rBLUE");
+		//UART_SendString("\n\rBLUE");
 		CS = CS + 50;
 		break;
 	}
