@@ -30,22 +30,23 @@ void LED_all_on(uint8_t LED[], char colour)
 	uint8_t mask = 0;
 	switch(colour)
 	{
-	case 'R':
+		case 'R':
 		offset = 0;
 		mask = 0b100;
 		break;
-	case 'G':
+		case 'G':
 		offset = 25;
 		mask = 0b010;
 		break;
-	case 'B':
+		case 'B':
 		offset = 50;
 		mask = 0b001;
 		break;
 	}
 	
 	for (int i = 0; i < LED_COUNT; i++)
-		LED[i] |= mask;
+	LED[i] |= mask;
+
 	
 	switch(colour)
 	{
@@ -57,7 +58,9 @@ void LED_all_on(uint8_t LED[], char colour)
 		break;
 	case 'B':
 		offset = 50;
-		break;	
+		break;
+	default:
+		return;
 	}
 	
 	for (uint8_t CS = offset; CS < 25 + offset; CS++)
@@ -65,7 +68,7 @@ void LED_all_on(uint8_t LED[], char colour)
 		CS_low(CS);
 		
 		SPI_Write(0x40);
-		SPI_Write(0x88);
+		SPI_Write(0xFF);
 
 		CS_high(CS);
 		_delay_ms(1);
